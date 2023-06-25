@@ -1,0 +1,15 @@
+label{
+    float: left;
+}
+.formBody{
+    width: 40%;
+}
+.error{
+    color:red;
+    text-align: left;
+}
+.buttons-group{
+    display: flex;
+    justify-content: space-around;
+    margin: 30px;
+}
