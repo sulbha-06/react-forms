@@ -1,29 +1,15 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import '../SignUpForm/SignUp.css'
-const SignupSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(5, "Name of product cannot be less than 5 characters!")
-    .max(50, "Name of product cannot be more than 25 characters!")
-    .required("Name of product Required"),
-    model: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
- description: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  price: Yup.number()
-    .min(1, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  type: Yup.string().min(1, "Too Short!"),
-});
+import formHeaders,{SignupSchema} from "../../Utility/properties";
 
-const ProductForms = ({initialValue , isEdit}) => {
+const ProductForms = ({initialValue }) => {
+  console.log("formHeaders-->",formHeaders);
   const {name,model,description,price,type} = initialValue;
+ const  headkeys = Object.keys(formHeaders);
+  console.log("headkeys---->",headkeys);
+  console.log(headkeys);
+
   return (
     <div className="App">
       <center>
@@ -47,7 +33,19 @@ const ProductForms = ({initialValue , isEdit}) => {
           {({ isSubmitting }) => (
             <div class="container">
               <Form className="formBody">
-                <div class="row">
+                {headkeys.map((name)=>{
+                  return (<div class="row">
+                    <label>{formHeaders[name]}</label>
+                  <Field
+                    class="form-control"
+                    type="text"
+                    name={name}
+                    placeholder= {`Enter ${name}`}
+                  />
+                  <div><ErrorMessage className="error" name={name} component="div" /></div>
+                </div>)
+                })}
+                {/* <div class="row">
                     <label>Product Name</label>
                   <Field
                     class="form-control"
@@ -81,7 +79,7 @@ const ProductForms = ({initialValue , isEdit}) => {
                     <label>Product type</label>
                   <Field class="form-control" type="text" name="type" />
                  <div> <ErrorMessage className="error" name="type" component="div" /></div>
-                </div>
+                </div> */}
                <div className="buttons-group">
                  <button class="btn btn-primary" type="submit" disabled={isSubmitting}>
                   Add Product
