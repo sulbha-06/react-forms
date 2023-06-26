@@ -1,90 +1,82 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import '../SignUpForm/SignUp.css'
-import formHeaders,{SignupSchema} from "../../Utility/properties";
-
-const ProductForms = ({initialValue }) => {
-  console.log("formHeaders-->",formHeaders);
-  const {name,model,description,price,type} = initialValue;
- const  headkeys = Object.keys(formHeaders);
-  console.log("headkeys---->",headkeys);
-  console.log(headkeys);
-
+import "../SignUpForm/SignUp.css";
+import formHeaders, { SignupSchema } from "../../Utility/properties";
+import {v4 as uuidv4} from 'uuid';
+const ProductForms = ({ initialValue, isEdit }) => {
+  const { name, model, description, price, type } = initialValue;
+  const headkeys = Object.keys(formHeaders);
+const handleSubmit = (formData)=>{
+  debugger;
+  console.log("form Data---->",formData);
+  formData.id =uuidv4();
+  const savedFormData = JSON.parse(localStorage.getItem("productDetail"));
+  if(savedFormData){
+      const data = [formData , ...savedFormData];
+      localStorage.setItem("productDetail",JSON.stringify(data));
+  }else{
+    const data =[{...formData}];
+    // data.push(formData)
+   const formDataString = JSON.stringify(data)
+    localStorage.setItem("productDetail",formDataString);
+  }
+}
   return (
-    <div className="App">
+    <div className="productForm">
       <center>
-        <h1>Register a new product</h1>
+        {!isEdit && <h1>Register a new product</h1>}
+        {isEdit && <h1>Edit product</h1>}
         <Formik
           initialValues={{
             name: name,
             model: model,
             description: description,
-            price:price,
-            type: type
-
+            price: price,
+            type: type,
           }}
           validationSchema={SignupSchema}
           onSubmit={(values) => {
             // same shape as initial values
-            console.log(values);
-            localStorage.setItem("productDetail",JSON.stringify(values));
+           handleSubmit(values);
           }}
         >
           {({ isSubmitting }) => (
-            <div class="container">
+            <div className="container">
               <Form className="formBody">
-                {headkeys.map((name)=>{
-                  return (<div class="row">
-                    <label>{formHeaders[name]}</label>
-                  <Field
-                    class="form-control"
-                    type="text"
-                    name={name}
-                    placeholder= {`Enter ${name}`}
-                  />
-                  <div><ErrorMessage className="error" name={name} component="div" /></div>
-                </div>)
+                {headkeys.map((name, index) => {
+                  return (
+                    <div key={index} class="row">
+                      <div class="row">
+                        <div className="col-md-5 labels">
+                          <label>{formHeaders[name]}</label>
+                        </div>
+                      </div>
+                      <Field
+                        className="form-control"
+                        type="text"
+                        name={name}
+                        placeholder={`Enter ${name}`}
+                      />
+                      <div>
+                        <ErrorMessage
+                          className="error"
+                          name={name}
+                          component="div"
+                        />
+                      </div>
+                    </div>
+                  );
                 })}
-                {/* <div class="row">
-                    <label>Product Name</label>
-                  <Field
-                    class="form-control"
-                    type="text"
-                    name="name"
-                    placeholder="Enter product name"
-                  />
-                  <div><ErrorMessage className="error" name="name" component="div" /></div>
+
+                <div className="buttons-group">
+                  <button
+                    className="btn btn-primary"
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
+                    Add Product
+                  </button>
                 </div>
-                <div class="row">
-                    <label>Model</label>
-                  <Field
-                    class="form-control"
-                    type="text"
-                    name="model"
-                    placeholder="Enter product model "
-                  />
-                  <div><ErrorMessage className="error" name="model" component="div" /></div>
-                </div>
-                <div class="row">
-                    <label>Product Description</label>
-                  <Field class="form-control" type="text" name="description" />
-                 <div> <ErrorMessage className="error" name="description" component="div" /></div>
-                </div>
-                <div class="row">
-                    <label>Price </label>
-                  <Field class="form-control" type="text" name="price" />
-                 <div> <ErrorMessage className="error" name="price" component="div" /></div>
-                </div>
-                <div class="row">
-                    <label>Product type</label>
-                  <Field class="form-control" type="text" name="type" />
-                 <div> <ErrorMessage className="error" name="type" component="div" /></div>
-                </div> */}
-               <div className="buttons-group">
-                 <button class="btn btn-primary" type="submit" disabled={isSubmitting}>
-                  Add Product
-                </button>
-               </div>
               </Form>
             </div>
           )}

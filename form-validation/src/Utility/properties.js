@@ -19,10 +19,7 @@ export const SignupSchema = Yup.object().shape({
     .min(2, "Too Short!")
     .max(50, "Too Long!")
     .required("Required"),
-  price: Yup.number()
-    .min(1, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
+  price: Yup.number().max(9999999, "Too Long!").required("Required"),
   type: Yup.string().min(1, "Too Short!"),
 });
 export default formHeaders;

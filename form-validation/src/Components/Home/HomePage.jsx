@@ -1,22 +1,23 @@
 import React from "react"
-
+import {Link} from "react-router-dom";
 const HomePage = () =>{
-    return(<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid" style={{ background: '#4FC0D0'}}>
-    <a  style={{    fontWeight: '500'}}>Home</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+    return(
+    <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{paddingTop: '0px'}}>
+  <div className="container-fluid" style={{ background: '#4FC0D0',height:'50px'}}>
+    <a className="nav-link active" aria-current="page">Home</a>
+    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span className="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse navBarCustom" id="navbarNav" style={{ justifyContent: 'center'}}>
-      <ul class="navbar-nav navBarCustom" style={{fontWeight: '500'}}>
-        <li class="nav-item" className="navLiLink">
-          <a class="nav-link active" aria-current="page" href="#">OnBoard</a>
+    <div className="collapse navbar-collapse navBarCustom" id="navbarNav" style={{ justifyContent: 'center'}}>
+      <ul className="navbar-nav navBarCustom" style={{fontWeight: '500'}}>
+        <li className="nav-item" style={{padding: '0px 50px 0px 50px',cursor:"pointer"}} className="navLiLink">
+         <Link to="/add"> Product OnBoard</Link>
         </li>
-        <li class="nav-item" className="navLiLink">
-          <a class="nav-link active" href="#">Products</a>
+        <li className="nav-item" style={{padding: '0px 50px 0px 50px',cursor:"pointer"}}className="navLiLink">
+          <Link to="/list">View Products</Link>
         </li>
-        <li class="nav-item" className="navLiLink">
-          <a class="nav-link active" href="#">Pricing</a>
+        <li className="nav-item" style={{padding: '0px 50px 0px 50px',cursor:"pointer"}}className="navLiLink">
+          <Link to="/edit">Actions</Link>
         </li>
       </ul>
     </div>
